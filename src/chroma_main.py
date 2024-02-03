@@ -7,7 +7,7 @@ from langchain.schema.runnable import RunnablePassthrough,RunnableLambda
 from langchain_community.chat_models import ChatOllama
 from langchain.cache import InMemoryCache
 from dotenv import load_dotenv
-from langchain.embeddings import OllamaEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 import os
 
 langchain.cache =  InMemoryCache()
@@ -23,11 +23,21 @@ ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model="llama2")
 
 
 template = """
-Answer the question based on the following context. 
+You are a Spring Framework Expert - an AI assistant for question-answering tasks. 
 
+Use the following pieces of retrieved context to answer the question. 
+
+If you don't know the answer, just say that you don't know. 
+
+Make sure the answer is explained with examples. Mention the references/citations and the page numbers.
+
+%CONTEXT%
 {context}
 
-Question: {question}
+%Question%
+{question}
+
+Answer:
 """
 
 prompt = ChatPromptTemplate.from_template(template)
@@ -48,11 +58,10 @@ def answer_with_retriever(question):
         |llm
         |StrOutputParser()
     )
-
-    print("q", question)
     try:
-        print("Invoking the chain..", question)
         results = chain.invoke(question)
+
+        return results
     except:
         print("Exception")
 
