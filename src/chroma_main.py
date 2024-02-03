@@ -18,9 +18,7 @@ CHROMA_DB = "./chroma_db"
 MODEL = os.getenv("MODEL", "llama2")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 llm = ChatOllama(base_url=OLLAMA_BASE_URL, model=MODEL)
-ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model="llama2")
-# embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-
+ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model="codellama")
 
 template = """
 You are a Spring Framework Expert - an AI assistant for question-answering tasks. 
