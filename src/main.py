@@ -18,6 +18,7 @@ load_dotenv()
 
 CHROMA_DB = "./chroma_db"
 MODEL = os.getenv("MODEL", "codellama")
+
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 llm = ChatOllama(base_url=OLLAMA_BASE_URL, model=MODEL, temperature=0.0)
 ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model="codellama")
@@ -35,10 +36,13 @@ with st.sidebar:
     st.markdown("<h2 style='text-align: center; color: black;'>Projects </h2>", unsafe_allow_html=True)
     option = st.selectbox("Spring Framework Version", options=("6.0", "5.3", "5.2"))
             
-    st.write("Spring Boot ")
-    st.write("Spring Data ")
-    st.write("Spring Cloud ")
-    st.write("Spring Integration ")
+    option = st.selectbox("Spring Boot Version", options=(" "))
+    
+    option = st.selectbox("Spring Data Version", options=(" "))
+    
+    option = st.selectbox("Spring Cloud Version", options=(" "))
+    
+    option = st.selectbox("Spring Integration Version", options=(" "))
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -47,15 +51,12 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# React to user input
+
 if prompt := st.chat_input("What is your query?"):
-    # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
-    st.chat_message("user").markdown(prompt)
-    # prompt = prompt+f". Make sure the answer is explained with examples. Mention the references/citations and the page numbers."
+    st.chat_message("user").markdown(prompt)    
     
-    response = answer_with_retriever(prompt)
+    response = answer_no_retriever(prompt)
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
