@@ -6,6 +6,6 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-EXPOSE 8501:8501
+EXPOSE 8502
 
 ENTRYPOINT ["streamlit", "run", "src/main.py"]

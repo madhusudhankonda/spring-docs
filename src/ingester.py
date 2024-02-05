@@ -8,10 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 CHROMA_DB = "./chroma_db"
+MODEL = os.getenv("MODEL", "codellama:70b")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-
-# embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model="llama2")
+ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model=MODEL)
 
 def get_all_chunks():
     loader = PyPDFDirectoryLoader("./data")
