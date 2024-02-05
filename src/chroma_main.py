@@ -15,10 +15,11 @@ langchain.cache =  InMemoryCache()
 load_dotenv()
 
 CHROMA_DB = "./chroma_db"
-MODEL = os.getenv("MODEL", "llama2")
+MODEL = os.getenv("MODEL", "codellama:70b")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+# OLLAMA_BASE_URL= "http://20.77.12.78:11434"
 llm = ChatOllama(base_url=OLLAMA_BASE_URL, model=MODEL)
-ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model="codellama")
+ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model=MODEL)
 
 template = """
 You are a Spring Framework Expert - an AI assistant for question-answering tasks. 
@@ -68,10 +69,13 @@ def add_qa_context(question):
     search = get_store().similarity_search(question)
     
     context = "\n".join(s.page_content for s in search) 
+    
     return context
 
 def answer_no_retriever(question):
-    
+    print("Answering the question", question)
+    print("Using model", MODEL)
+
     chain = (
     {"context":RunnableLambda(add_qa_context), "question":RunnablePassthrough()}
     |prompt
@@ -80,6 +84,6 @@ def answer_no_retriever(question):
     )
 
     res = chain.invoke(question)
-
+    # print("res",res)
     return res
 
