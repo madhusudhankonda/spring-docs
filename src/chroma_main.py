@@ -17,7 +17,9 @@ load_dotenv()
 CHROMA_DB = "./chroma_db"
 MODEL = os.getenv("MODEL", "codellama:70b")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+
 # OLLAMA_BASE_URL= "http://20.77.12.78:11434"
+
 llm = ChatOllama(base_url=OLLAMA_BASE_URL, model=MODEL)
 ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model=MODEL)
 
