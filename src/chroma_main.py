@@ -15,7 +15,7 @@ langchain.cache =  InMemoryCache()
 load_dotenv()
 
 CHROMA_DB = "./chroma_db"
-MODEL = os.getenv("MODEL", "codellama:70b")
+MODEL = os.getenv("MODEL", "codellama")
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
 # OLLAMA_BASE_URL= "http://20.77.12.78:11434"
