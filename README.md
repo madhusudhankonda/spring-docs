@@ -3,6 +3,13 @@ Spring Framework Docs Assistant
 
 # Building user Docker
 
+You can build the app's image separately by executing the following command:
+```
+docker build -t spring-docs:0.1 .
+```
+
+This will produce a docker image spring-docs:0.1 which is referenced in the docker-compose file. Hence, you can run the app by issuing the following command:
+
 ```
 # Running the docker compose
 
