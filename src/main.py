@@ -26,23 +26,46 @@ ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model="codellama"
 img = Image.open("./src/spring-bot.png")
 size = (800, 200)
 img = img.resize(size)
-st.image(img)
+st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 1rem;
+                    padding-bottom: 0rem;
+                    padding-left: 5rem;
+                    padding-right: 5rem;
+                    max-width: 800px; /* Adjust the maximum width as needed */
+        padding: 0 20px; /* Add padding to the sides */
+                }
+        </style>
+        """, unsafe_allow_html=True)
+st.image(img,use_column_width=True)
 
 
-st.markdown("<h1 style='text-align: center; color: grey;'>Spring Framework Docs AI Assistant</h1>", unsafe_allow_html=True)
-# st.markdown("<h2 style='text-align: center; color: black;'>An AI helper for Spring Framework Docs </h2>", unsafe_allow_html=True)
 
-with st.sidebar:
-    st.markdown("<h2 style='text-align: center; color: black;'>Projects </h2>", unsafe_allow_html=True)
-    option = st.selectbox("Spring Framework Version", options=("6.0", "5.3", "5.2"))
+
+
+col1,col2,col3,col4,col5,col6= st.columns(6)
+with col1:
+    option = st.selectbox(
+        'Version',
+        ('6.0', '5.3', '5.2'))
+
+
+
+# st.markdown("<h1 style='text-align: center; color: grey;'>Spring Framework Docs AI Assistant</h1>", unsafe_allow_html=True)
+# # st.markdown("<h2 style='text-align: center; color: black;'>An AI helper for Spring Framework Docs </h2>", unsafe_allow_html=True)
+
+# with st.sidebar:
+#     st.markdown("<h2 style='text-align: center; color: black;'>Projects </h2>", unsafe_allow_html=True)
+#     option = st.selectbox("Spring Framework Version", options=("6.0", "5.3", "5.2"))
             
-    option = st.selectbox("Spring Boot Version", options=(" "))
+#     option = st.selectbox("Spring Boot Version", options=(" "))
     
-    option = st.selectbox("Spring Data Version", options=(" "))
+#     option = st.selectbox("Spring Data Version", options=(" "))
     
-    option = st.selectbox("Spring Cloud Version", options=(" "))
+#     option = st.selectbox("Spring Cloud Version", options=(" "))
     
-    option = st.selectbox("Spring Integration Version", options=(" "))
+#     option = st.selectbox("Spring Integration Version", options=(" "))
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -63,3 +86,9 @@ if prompt := st.chat_input("What is your query?"):
         # message_placeholder.markdown(response + "▌")
         message_placeholder.markdown(response)
     st.session_state.messages.append({"role": "assistant", "content": response})
+    
+with col6:
+    st.write("")
+    st.button("clear history", type="primary")    
+    if st.button:
+        st.session_state.messages = []
