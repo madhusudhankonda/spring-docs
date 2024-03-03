@@ -41,31 +41,11 @@ st.markdown("""
 st.image(img,use_column_width=True)
 
 
-
-
-
 col1,col2,col3,col4,col5,col6= st.columns(6)
 with col1:
     option = st.selectbox(
         'Version',
         ('6.0', '5.3', '5.2'))
-
-
-
-# st.markdown("<h1 style='text-align: center; color: grey;'>Spring Framework Docs AI Assistant</h1>", unsafe_allow_html=True)
-# # st.markdown("<h2 style='text-align: center; color: black;'>An AI helper for Spring Framework Docs </h2>", unsafe_allow_html=True)
-
-# with st.sidebar:
-#     st.markdown("<h2 style='text-align: center; color: black;'>Projects </h2>", unsafe_allow_html=True)
-#     option = st.selectbox("Spring Framework Version", options=("6.0", "5.3", "5.2"))
-            
-#     option = st.selectbox("Spring Boot Version", options=(" "))
-    
-#     option = st.selectbox("Spring Data Version", options=(" "))
-    
-#     option = st.selectbox("Spring Cloud Version", options=(" "))
-    
-#     option = st.selectbox("Spring Integration Version", options=(" "))
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
