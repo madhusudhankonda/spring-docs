@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 CHROMA_DB = "./chroma_db"
-MODEL = os.getenv("MODEL", "codellama")
-OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+MODEL = os.getenv("MODEL")
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL")
 ollama_embeddings = OllamaEmbeddings(base_url=OLLAMA_BASE_URL, model=MODEL)
 
 def get_all_chunks():

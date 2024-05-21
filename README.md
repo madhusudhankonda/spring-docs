@@ -29,7 +29,7 @@ Make sure the env file has the following attributes:
 # If running in a container, use "ollama" as the sevice
 OLLAMA_BASE_URL=http://ollama:11434
 
-MODEL=codellama
+MODEL=llama2
 MODEL_VERBOSE=True
 ```
 > You can take a copy of `.env_sample` and rename it to `.env` and change the attribute values as per your requirements
