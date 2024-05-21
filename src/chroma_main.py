@@ -3,20 +3,21 @@ import langchain
 from langchain.vectorstores.chroma import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
-from langchain.schema.runnable import RunnablePassthrough,RunnableLambda
+from langchain.schema.runnable import RunnablePassthrough
 from langchain_community.chat_models import ChatOllama
 from langchain.cache import InMemoryCache
 from dotenv import load_dotenv
 from langchain_community.embeddings import OllamaEmbeddings
+from langchain.chains import ConversationalRetrievalChain, RetrievalQA
 import os
 
-langchain.cache =  InMemoryCache()
+langchain.cache = InMemoryCache()
 
 load_dotenv()
 
 CHROMA_DB = "./chroma_db"
-MODEL = os.getenv("MODEL", "codellama")
-OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+MODEL = os.getenv("MODEL")
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL")
 
 # OLLAMA_BASE_URL= "http://20.77.12.78:11434"
 
@@ -50,21 +51,22 @@ def get_store():
 
     return store
 
-def answer_with_retriever(question):
-    retriever = get_store().as_retriever(search_kwargs={"k":3})
+def get_qa_chain(memory):
+    vector_store = get_store()
 
-    chain = (
-        {"context":retriever, "question":RunnablePassthrough()}
-        |prompt
-        |llm
-        |StrOutputParser()
-    )
-    try:
-        results = chain.invoke(question)
+    retriever = vector_store.as_retriever(
+        search_type="similarity", search_kwargs={"k": 4})
+    
+    memory = memory
+    qa_chain = ConversationalRetrievalChain.from_llm(llm=llm, retriever=retriever, memory=memory, verbose = True)
 
-        return results
-    except:
-        print("Exception")
+    return qa_chain
+
+def answer(query,memory):
+    qa_chain = get_qa_chain(memory)
+    result = qa_chain(query)
+    
+    return result['answer']
 
 
 def add_qa_context(question):
@@ -88,4 +90,3 @@ def answer_no_retriever(question):
     res = chain.invoke(question)
     # print("res",res)
     return res
-
