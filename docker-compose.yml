@@ -9,8 +9,8 @@ services:
       - 11434:11434
     restart: unless-stopped
   
-  mygpt:
-    build: .
+  spring-docs:
+    image: spring-docs:0.1
     ports:
       - 80:8501
     extra_hosts:
