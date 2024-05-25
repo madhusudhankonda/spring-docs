@@ -32,8 +32,10 @@ st.markdown("""
 st.image(img, use_column_width=True)
 
 col1, col2, col3, col4, col5, col6 = st.columns(6)
+
 with col1:
     option = st.selectbox('Version', ('6.0', '5.3', '5.2'))
+
 with col6:
     st.write("")
     if st.button("clear history", type="primary"):
@@ -41,13 +43,15 @@ with col6:
 
 if "messages" not in st.session_state.keys():
     st.session_state.messages = [
-        {"role": "assistant","content": "Ask anything about the  Spring Boot!"}
+        {"role": "assistant",
+         "content": "I am a Spring Framework assistant. How can I help you?!"}
     ]
 
 if "chat_memory" not in st.session_state.keys():
         st.session_state["chat_memory"] = ConversationBufferMemory(
             memory_key="chat_history", return_messages=True
         )
+
 memory = st.session_state["chat_memory"]
 
 for message in st.session_state.messages:
@@ -60,7 +64,6 @@ if user_prompt is not None:
     st.session_state.messages.append({"role": "user","content": user_prompt})
     with st.chat_message("user"):
         st.write(user_prompt)
-
 
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
