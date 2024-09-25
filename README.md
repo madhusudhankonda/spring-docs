@@ -13,7 +13,7 @@ This will produce a docker image spring-docs:0.1 which is referenced in the dock
 ```
 # Running the docker compose
 
-docker compose --env-file .env up 
+docker compose --env-file .env up
 ```
 
 Make sure the `.env` file exists in the current directory.
